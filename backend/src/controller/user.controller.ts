@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { LoginUserRequest, RegisterUserRequest } from '../model/user.model';
+import { LoginUserRequest, RegisterUserRequest, UserJWTPayload } from '../model/user.model';
 import { UserService } from '../service/user.service';
 
 export class UserController {
@@ -20,6 +20,19 @@ export class UserController {
     try {
       const request = req.body as LoginUserRequest;
       const result = await UserService.login(request);
+
+      res.status(200).json({
+        data: result,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async getCurrent(req: Request, res: Response, next: NextFunction) {
+    try {
+      const user = req.user as UserJWTPayload;
+      const result = await UserService.getCurrent(user);
 
       res.status(200).json({
         data: result,

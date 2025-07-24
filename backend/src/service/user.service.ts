@@ -78,4 +78,16 @@ export class UserService {
       refreshToken,
     };
   }
+
+  static async getCurrent(user: UserJWTPayload): Promise<UserResponse> {
+    const currentUser = await prismaClient.user.findUnique({
+      where: { id: user.id },
+    });
+
+    if (!currentUser) {
+      throw new ResponseError(404, 'User not found.');
+    }
+
+    return toUserResponse(currentUser);
+  }
 }
