@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { RegisterUserRequest } from '../model/user.model';
+import { LoginUserRequest, RegisterUserRequest } from '../model/user.model';
 import { UserService } from '../service/user.service';
 
 export class UserController {
@@ -9,6 +9,19 @@ export class UserController {
       const result = await UserService.register(request);
 
       res.status(201).json({
+        data: result,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async login(req: Request, res: Response, next: NextFunction) {
+    try {
+      const request = req.body as LoginUserRequest;
+      const result = await UserService.login(request);
+
+      res.status(200).json({
         data: result,
       });
     } catch (error) {

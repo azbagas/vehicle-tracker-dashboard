@@ -12,6 +12,17 @@ export type RegisterUserRequest = {
   password: string;
 };
 
+export type LoginUserRequest = {
+  email: string;
+  password: string;
+}
+
+export type UserJWTPayload = {
+  id: number;
+  name: string;
+  email: string;
+};
+
 export function toUserResponse(user: User): UserResponse {
   return {
     id: user.id,

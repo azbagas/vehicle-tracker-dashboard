@@ -16,4 +16,17 @@ export class UserValidation {
       })
       .min(6, 'Password minimum 6 characters.'),
   });
+
+  static readonly LOGIN: ZodType = z.object({
+    email: z
+      .string({
+        required_error: 'Email is required.',
+      })
+      .email('Email is not valid.'),
+    password: z
+      .string({
+        required_error: 'Password is required.',
+      })
+      .min(6, 'Password minimum 6 characters.'),
+  });
 }
