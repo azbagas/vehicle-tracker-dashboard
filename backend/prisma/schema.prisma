@@ -38,3 +38,20 @@ model RefreshToken {
 
   @@map("refresh_tokens")
 }
+
+model Vehicle {
+  id         Int      @id @default(autoincrement())
+  name       String   @db.VarChar(100)
+  status     Status
+  fuel_level Float
+  odometer   Float
+  latitude   Float
+  longitude  Float
+  speed      Float
+  updated_at DateTime @updatedAt
+}
+
+enum Status {
+  ACTIVE
+  INACTIVE
+}
