@@ -13,5 +13,6 @@ apiRouter.delete('/users/logout', UserController.logout);
 
 // Vehicle API
 apiRouter.get('/vehicles', VehicleController.list);
+apiRouter.get('/vehicles/:id', VehicleController.get);
 
 export { apiRouter };
