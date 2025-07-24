@@ -8,6 +8,7 @@ apiRouter.use(authMiddleware);
 // User API
 apiRouter.get('/users/current', UserController.getCurrent);
 apiRouter.post('/users/register', UserController.register);
+apiRouter.delete('/users/logout', UserController.logout);
 
 export { apiRouter };
 

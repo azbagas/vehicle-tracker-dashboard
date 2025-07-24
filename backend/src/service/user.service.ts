@@ -4,6 +4,7 @@ import { TokenResponse } from '../model/refreshToken.model';
 import {
   GetNewAccessTokenRequest,
   LoginUserRequest,
+  LogoutUserRequest,
   RegisterUserRequest,
   toUserResponse,
   UserJWTPayload,
@@ -145,6 +146,33 @@ export class UserService {
 
     return {
       accessToken,
+    };
+  }
+
+  static async logout(request: LogoutUserRequest): Promise<TokenResponse> {
+    const validatedData = Validation.validate(UserValidation.LOGOUT, request);
+    const refreshToken = validatedData.refreshToken;
+
+    const existingRefreshToken = await prismaClient.refreshToken.findFirst({
+      where: {
+        refresh_token: refreshToken,
+      },
+    });
+
+    if (!existingRefreshToken) {
+      throw new ResponseError(401, 'Invalid refresh token.');
+    }
+
+    // Delete refresh token
+    await prismaClient.refreshToken.delete({
+      where: {
+        id: existingRefreshToken.id,
+      },
+    });
+
+    return {
+      accessToken: '',
+      refreshToken: '',
     };
   }
 }

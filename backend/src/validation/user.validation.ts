@@ -35,4 +35,10 @@ export class UserValidation {
       required_error: 'Refresh token is required.',
     }),
   });
+
+  static readonly LOGOUT: ZodType = z.object({
+    refreshToken: z.string({
+      required_error: 'Refresh token is required.',
+    }),
+  });
 }

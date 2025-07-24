@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import {
   GetNewAccessTokenRequest,
   LoginUserRequest,
+  LogoutUserRequest,
   RegisterUserRequest,
   UserJWTPayload,
 } from '../model/user.model';
@@ -55,6 +56,19 @@ export class UserController {
     try {
       const request = req.body as GetNewAccessTokenRequest;
       const result = await UserService.getNewAccessToken(request);
+
+      res.status(200).json({
+        data: result,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async logout(req: Request, res: Response, next: NextFunction) {
+    try {
+      const request = req.body as LogoutUserRequest;
+      const result = await UserService.logout(request);
 
       res.status(200).json({
         data: result,

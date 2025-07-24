@@ -27,6 +27,10 @@ export type GetNewAccessTokenRequest = {
   refreshToken: string;
 }
 
+export type LogoutUserRequest = {
+  refreshToken: string;
+}
+
 export function toUserResponse(user: User): UserResponse {
   return {
     id: user.id,
