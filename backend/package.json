@@ -1,6 +1,9 @@
 {
   "name": "backend",
   "version": "1.0.0",
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  },
   "main": "src/index.ts",
   "scripts": {
     "dev": "nodemon",
@@ -17,6 +20,7 @@
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "@types/jsonwebtoken": "^9.0.7",
+    "@types/node": "^24.1.0",
     "dotenv": "^17.2.0",
     "nodemon": "^3.1.7",
     "prisma": "^6.12.0",

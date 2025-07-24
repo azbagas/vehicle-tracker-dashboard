@@ -2,7 +2,7 @@
 CREATE TYPE "Status" AS ENUM ('ACTIVE', 'INACTIVE');
 
 -- CreateTable
-CREATE TABLE "Vehicle" (
+CREATE TABLE "vehicles" (
     "id" SERIAL NOT NULL,
     "name" VARCHAR(100) NOT NULL,
     "status" "Status" NOT NULL,
@@ -13,5 +13,5 @@ CREATE TABLE "Vehicle" (
     "speed" DOUBLE PRECISION NOT NULL,
     "updated_at" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "Vehicle_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "vehicles_pkey" PRIMARY KEY ("id")
 );

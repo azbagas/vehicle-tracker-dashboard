@@ -49,6 +49,8 @@ model Vehicle {
   longitude  Float
   speed      Float
   updated_at DateTime @updatedAt
+
+  @@map("vehicles")
 }
 
 enum Status {
