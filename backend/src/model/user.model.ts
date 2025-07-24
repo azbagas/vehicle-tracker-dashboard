@@ -23,6 +23,10 @@ export type UserJWTPayload = {
   email: string;
 };
 
+export type GetNewAccessTokenRequest = {
+  refreshToken: string;
+}
+
 export function toUserResponse(user: User): UserResponse {
   return {
     id: user.id,

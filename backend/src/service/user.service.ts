@@ -2,13 +2,18 @@ import { prismaClient } from '../application/database';
 import { ResponseError } from '../error/response-error';
 import { TokenResponse } from '../model/refreshToken.model';
 import {
+  GetNewAccessTokenRequest,
   LoginUserRequest,
   RegisterUserRequest,
   toUserResponse,
   UserJWTPayload,
   UserResponse,
 } from '../model/user.model';
-import { generateAccessToken, generateRefreshToken } from '../utils/auth';
+import {
+  generateAccessToken,
+  generateRefreshToken,
+  verifyRefreshToken,
+} from '../utils/auth';
 import { UserValidation } from '../validation/user.validation';
 import { Validation } from '../validation/validation';
 import bcrypt from 'bcrypt';
@@ -89,5 +94,57 @@ export class UserService {
     }
 
     return toUserResponse(currentUser);
+  }
+
+  static async getNewAccessToken(
+    request: GetNewAccessTokenRequest
+  ): Promise<Omit<TokenResponse, 'refreshToken'>> {
+    const validatedData = Validation.validate(
+      UserValidation.GET_NEW_ACCESS_TOKEN,
+      request
+    );
+    const refreshToken = validatedData.refreshToken;
+
+    // Check if refresh token exists in database
+    const existingRefreshToken = await prismaClient.refreshToken.findFirst({
+      where: {
+        refresh_token: refreshToken,
+      },
+    });
+
+    if (!existingRefreshToken) {
+      throw new ResponseError(401, 'Invalid refresh token.');
+    }
+
+    // Verify refresh token
+    const decoded = verifyRefreshToken(refreshToken);
+    if (decoded == 'EXPIRED') {
+      // Delete refresh token
+      await prismaClient.refreshToken.delete({
+        where: {
+          id: existingRefreshToken.id,
+        },
+      });
+
+      throw new ResponseError(
+        401,
+        'Refresh token expired. Please login again.'
+      );
+    } else if (decoded == 'INVALID') {
+      throw new ResponseError(401, 'Invalid refresh token.');
+    }
+
+    // Generate new access token
+    const payload: UserJWTPayload = {
+      id: decoded.id,
+      email: decoded.email,
+      name: decoded.name,
+    };
+
+    const accessToken = generateAccessToken(payload);
+
+    return {
+      accessToken,
+    };
   }
 }

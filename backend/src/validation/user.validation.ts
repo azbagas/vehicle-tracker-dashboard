@@ -29,4 +29,10 @@ export class UserValidation {
       })
       .min(6, 'Password minimum 6 characters.'),
   });
+
+  static readonly GET_NEW_ACCESS_TOKEN: ZodType = z.object({
+    refreshToken: z.string({
+      required_error: 'Refresh token is required.',
+    }),
+  });
 }

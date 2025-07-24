@@ -1,5 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
-import { LoginUserRequest, RegisterUserRequest, UserJWTPayload } from '../model/user.model';
+import {
+  GetNewAccessTokenRequest,
+  LoginUserRequest,
+  RegisterUserRequest,
+  UserJWTPayload,
+} from '../model/user.model';
 import { UserService } from '../service/user.service';
 
 export class UserController {
@@ -33,6 +38,23 @@ export class UserController {
     try {
       const user = req.user as UserJWTPayload;
       const result = await UserService.getCurrent(user);
+
+      res.status(200).json({
+        data: result,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async getNewAccessToken(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    try {
+      const request = req.body as GetNewAccessTokenRequest;
+      const result = await UserService.getNewAccessToken(request);
 
       res.status(200).json({
         data: result,
