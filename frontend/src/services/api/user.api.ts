@@ -25,3 +25,7 @@ export async function getCurrentUser(): Promise<User> {
   const response = await axiosInstance.get('/users/current');
   return response.data.data.user;
 }
+
+export async function logout(data: { refreshToken: string }): Promise<void> {
+  await axiosInstance.delete('/users/logout', { data });
+}

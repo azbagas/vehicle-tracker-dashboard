@@ -1,6 +1,6 @@
 import type { Login, Register } from '@/types/User';
 import { useMutation } from '@tanstack/react-query';
-import { login, register } from '@/services/api/user.api';
+import { login, logout, register } from '@/services/api/user.api';
 import { toast } from 'sonner';
 import { AxiosError } from 'axios';
 import type { ErrorResponse } from '@/types/Error';
@@ -42,11 +42,41 @@ export function useRegister() {
       toast.success('Registration success', {
         description: 'You have successfully registered.',
       });
-      
+
       navigate('/login');
     },
     onError: (error: AxiosError<ErrorResponse>) => {
       toast.error('Registration failed', {
+        description: error.message,
+      });
+    },
+  });
+}
+
+export function useLogout() {
+  const setAccessToken = useAuthStore((state) => state.setAccessToken);
+  const setRefreshToken = useAuthStore((state) => state.setRefreshToken);
+  const setUser = useAuthStore((state) => state.setUser);
+  const navigate = useNavigate();
+
+  return useMutation({
+    mutationFn: (data: { refreshToken: string }) => logout(data),
+    onSuccess: () => {
+      // Clear tokens and user data
+      setAccessToken(null);
+      setRefreshToken(null);
+      setUser(null);
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+
+      toast.success('Logout success', {
+        description: 'You have successfully logged out.',
+      });
+
+      navigate('/login');
+    },
+    onError: (error: AxiosError<ErrorResponse>) => {
+      toast.error('Logout failed', {
         description: error.message,
       });
     },

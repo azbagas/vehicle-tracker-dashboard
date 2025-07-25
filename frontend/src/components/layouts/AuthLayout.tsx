@@ -1,15 +1,23 @@
-import { Outlet, Navigate, Link } from 'react-router';
+import { Outlet, Navigate, NavLink } from 'react-router';
 import { useEffect, useState } from 'react';
 import { getCurrentUser } from '@/services/api/user.api';
 import useAuthStore from '@/store/useAuthStore';
 import { Menu, X } from 'lucide-react';
 import { Avatar, AvatarFallback } from '../ui/avatar';
+import { useLogout } from '@/services/mutations/user.mutation';
+import { Button } from '../ui/button';
+import Spinner from '../shared/Spinner';
+import { clsx } from 'clsx';
 
 export default function AuthLayout() {
   const [menuOpen, setMenuOpen] = useState(false);
   const accessToken = useAuthStore((state) => state.accessToken);
+  const refreshToken = useAuthStore((state) => state.refreshToken);
   const setUser = useAuthStore((state) => state.setUser);
   const user = useAuthStore((state) => state.user);
+
+  // Logout
+  const { mutate, isPending } = useLogout();
 
   // Set user data to state
   useEffect(() => {
@@ -42,15 +50,25 @@ export default function AuthLayout() {
           Vehicle Tracker
         </div>
         <nav className="space-y-4">
-          <Link to="/" className="block text-sm text-gray-700 hover:text-black">
-            Dashboard
-          </Link>
-          <a
-            href="#"
-            className="block text-sm text-gray-700 hover:text-red-500"
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              clsx(
+                'block text-sm text-gray-700 hover:text-black hover:bg-gray-200 p-2 rounded',
+                isActive ? 'bg-gray-200' : ''
+              )
+            }
           >
-            Logout
-          </a>
+            Dashboard
+          </NavLink>
+          <Button
+            variant={'secondary'}
+            onClick={() => mutate({ refreshToken: refreshToken ?? '' })}
+            className="block w-full text-sm mt-16"
+            disabled={isPending}
+          >
+            Logout {isPending && <Spinner />}
+          </Button>
         </nav>
       </aside>
 
