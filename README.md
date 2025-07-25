@@ -35,7 +35,7 @@ npm run dev
 ```
 4. Don't forget to run the database server (PostgreSQL).
 
-The backend server will start on the configured port (default: `http://localhost:8080`).
+The backend server will start on the configured port (default: `http://localhost:5000`).
 
 ---
 
