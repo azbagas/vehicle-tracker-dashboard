@@ -41,6 +41,7 @@ export class UserService {
     validatedData.password = await bcrypt.hash(validatedData.password, 10);
 
     // Remove password confirmation from data to be saved
+    delete validatedData.password_confirmation;
 
     const user = await prismaClient.user.create({
       data: validatedData,
