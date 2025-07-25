@@ -32,6 +32,12 @@ export type LogoutUserRequest = {
   refreshToken: string;
 }
 
+export type LoginResponse = {
+  user: UserResponse;
+  accessToken: string;
+  refreshToken: string;
+}
+
 export function toUserResponse(user: User): UserResponse {
   return {
     id: user.id,

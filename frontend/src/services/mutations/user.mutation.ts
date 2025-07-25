@@ -27,7 +27,7 @@ export function useLogin() {
     },
     onError: (error: AxiosError<ErrorResponse>) => {
       toast.error('Login failed', {
-        description: error.message,
+        description: error.response?.data.errors || error.message,
       });
     },
   });
@@ -46,8 +46,9 @@ export function useRegister() {
       navigate('/login');
     },
     onError: (error: AxiosError<ErrorResponse>) => {
+      console.log(error);
       toast.error('Registration failed', {
-        description: error.message,
+        description: error.response?.data.errors || error.message,
       });
     },
   });
@@ -77,7 +78,7 @@ export function useLogout() {
     },
     onError: (error: AxiosError<ErrorResponse>) => {
       toast.error('Logout failed', {
-        description: error.message,
+        description: error.response?.data.errors || error.message,
       });
     },
   });

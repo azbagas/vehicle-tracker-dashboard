@@ -1,6 +1,7 @@
 import { Response, Request, NextFunction } from 'express';
 import { ZodError } from 'zod';
 import { ResponseError } from '../error/response-error';
+import { logger } from '../application/logging';
 
 export const errorMiddleware = async (
   error: Error,
@@ -8,6 +9,11 @@ export const errorMiddleware = async (
   res: Response,
   next: NextFunction
 ) => {
+  // Log the error using winston
+  logger.error({
+    message: error.message,
+  });
+
   if (error instanceof ZodError) {
     // Format Zod errors into a readable string
     const formattedErrors = error.errors

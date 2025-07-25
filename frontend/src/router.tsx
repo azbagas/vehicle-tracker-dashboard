@@ -5,7 +5,7 @@ import Login from './pages/login';
 import Register from './pages/register';
 import AuthLayout from './components/layouts/AuthLayout';
 import Dashboard from './pages/dashboard';
-import Detail from './pages/detail';
+import Detail from './pages/vehicles/detail';
 
 const router = createBrowserRouter([
   {
