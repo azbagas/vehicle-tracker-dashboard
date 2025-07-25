@@ -23,6 +23,11 @@ export class UserService {
   static async register(request: RegisterUserRequest): Promise<UserResponse> {
     const validatedData = Validation.validate(UserValidation.REGISTER, request);
 
+    // Check password confirmation
+    if (validatedData.password !== validatedData.password_confirmation) {
+      throw new ResponseError(400, 'Password and password confirmation do not match.');
+    }
+
     const totalUserWithSameEmail = await prismaClient.user.count({
       where: {
         email: validatedData.email,

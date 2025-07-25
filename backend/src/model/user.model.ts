@@ -10,6 +10,7 @@ export type RegisterUserRequest = {
   email: string;
   name: string;
   password: string;
+  password_confirmation: string;
 };
 
 export type LoginUserRequest = {
