@@ -8,7 +8,7 @@ An intern Take-Home Assignment.
 - **Frontend:** User interface for dashboard.
 
 ## Feature Implemented
-- Frontend: React, TypeScript, Zustand, Tailwind CSS, Shadcn React Router, Axios, TanStack Query.
+- Frontend: React, TypeScript, Zustand, Tailwind CSS, Shadcn, React Router, Axios, TanStack Query.
 - Backend: Node.js, Express, JWT Authentication, Prisma ORM.
 - Database: PostgreSQL.
 
@@ -53,7 +53,7 @@ npm install
 npm run dev
 ```
 
-The frontend will be available at `http://localhost:5432`.
+The frontend will be available at `http://localhost:5173`.
 
 ## Some Screenshots
 
