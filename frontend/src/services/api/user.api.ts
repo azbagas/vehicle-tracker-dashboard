@@ -15,7 +15,7 @@ export async function login(data: Login): Promise<{
 export async function register(data: Register): Promise<{
   user: User;
 }> {
-  const response = await axiosInstance.post('/users/register', data);
+  const response = await axiosInstance.post('/users', data);
   return {
     user: response.data.data.user,
   };

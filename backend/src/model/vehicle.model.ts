@@ -12,6 +12,20 @@ export type VehicleResponse = {
   updated_at: string;
 };
 
+export type VehicleListResponse = {
+  id: number;
+  name: string;
+  status: 'ACTIVE' | 'INACTIVE';
+};
+
+export function toVehicleListResponse(vehicle: Vehicle): VehicleListResponse {
+  return {
+    id: vehicle.id,
+    name: vehicle.name,
+    status: vehicle.status,
+  };
+}
+
 export function toVehicleResponse(vehicle: Vehicle): VehicleResponse {
   return {
     id: vehicle.id,

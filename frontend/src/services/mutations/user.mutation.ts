@@ -5,6 +5,7 @@ import { toast } from 'sonner';
 import { AxiosError } from 'axios';
 import type { ErrorResponse } from '@/types/Error';
 import useAuthStore from '@/store/useAuthStore';
+import { useNavigate } from 'react-router';
 
 export function useLogin() {
   const setAccessToken = useAuthStore((state) => state.setAccessToken);
@@ -33,12 +34,16 @@ export function useLogin() {
 }
 
 export function useRegister() {
+  const navigate = useNavigate();
+
   return useMutation({
     mutationFn: (data: Register) => register(data),
     onSuccess: () => {
       toast.success('Registration success', {
         description: 'You have successfully registered.',
       });
+      
+      navigate('/login');
     },
     onError: (error: AxiosError<ErrorResponse>) => {
       toast.error('Registration failed', {

@@ -1,12 +1,12 @@
 import { prismaClient } from '../application/database';
 import { ResponseError } from '../error/response-error';
-import { toVehicleResponse, VehicleResponse } from '../model/vehicle.model';
+import { toVehicleListResponse, toVehicleResponse, VehicleListResponse, VehicleResponse } from '../model/vehicle.model';
 
 export class VehicleService {
-  static async list(): Promise<VehicleResponse[]> {
+  static async list(): Promise<VehicleListResponse[]> {
     const vehicles = await prismaClient.vehicle.findMany();
 
-    return vehicles.map((vehicle) => toVehicleResponse(vehicle));
+    return vehicles.map((vehicle) => toVehicleListResponse(vehicle));
   }
 
   static async get(vehicleId: number): Promise<VehicleResponse> {

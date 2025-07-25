@@ -76,7 +76,7 @@ axiosInstance.interceptors.response.use(
       try {
         // Use a separate axios instance for refresh to avoid interceptors
         const refreshResponse = await axios.post(
-          `${import.meta.env.VITE_API_BASE_URL}/users/refresh`,
+          `${import.meta.env.VITE_API_BASE_URL}/users/refresh-token`,
           { refreshToken },
           {
             headers: { 'Content-Type': 'application/json' },

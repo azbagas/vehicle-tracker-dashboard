@@ -5,6 +5,7 @@ import Login from './pages/login';
 import Register from './pages/register';
 import AuthLayout from './components/layouts/AuthLayout';
 import Dashboard from './pages/dashboard';
+import Detail from './pages/detail';
 
 const router = createBrowserRouter([
   {
@@ -19,7 +20,10 @@ const router = createBrowserRouter([
       },
       {
         element: <AuthLayout />,
-        children: [{ path: '/', element: <Dashboard /> }],
+        children: [
+          { path: '/', element: <Dashboard /> },
+          { path: '/vehicles/:vehicleId', element: <Detail /> },
+        ],
       },
       {
         path: '*',
