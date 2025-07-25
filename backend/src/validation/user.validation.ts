@@ -15,6 +15,11 @@ export class UserValidation {
         required_error: 'Password is required.',
       })
       .min(6, 'Password minimum 6 characters.'),
+    password_confirmation: z
+      .string({
+        required_error: 'Password confirmation is required.',
+      })
+      .min(6, 'Password confirmation minimum 6 characters.'),
   });
 
   static readonly LOGIN: ZodType = z.object({
