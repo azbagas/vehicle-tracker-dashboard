@@ -46,7 +46,6 @@ export function useRegister() {
       navigate('/login');
     },
     onError: (error: AxiosError<ErrorResponse>) => {
-      console.log(error);
       toast.error('Registration failed', {
         description: error.response?.data.errors || error.message,
       });

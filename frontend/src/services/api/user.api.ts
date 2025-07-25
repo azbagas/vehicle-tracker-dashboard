@@ -12,18 +12,14 @@ export async function login(data: Login): Promise<{
   };
 }
 
-export async function register(data: Register): Promise<{
-  user: User;
-}> {
+export async function register(data: Register): Promise<User> {
   const response = await axiosInstance.post('/users', data);
-  return {
-    user: response.data.data.user,
-  };
+  return response.data.data;
 }
 
 export async function getCurrentUser(): Promise<User> {
   const response = await axiosInstance.get('/users/current');
-  return response.data.data.user;
+  return response.data.data;
 }
 
 export async function logout(data: { refreshToken: string }): Promise<void> {

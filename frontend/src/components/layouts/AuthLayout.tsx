@@ -92,9 +92,9 @@ export default function AuthLayout() {
             >
               <Menu className="h-6 w-6" />
             </button>
-            <p>{user?.name}</p>
+            <p>Halo, {user?.name}!</p>
             <Avatar>
-              <AvatarFallback>JD</AvatarFallback>
+              <AvatarFallback><img src="https://robohash.org/fwwfw?set=set4" alt="" /></AvatarFallback>
             </Avatar>
           </div>
         </div>
